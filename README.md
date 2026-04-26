@@ -48,7 +48,7 @@ const plaintext = await decrypt(ciphertext, keyHex);
 // → "Hello, world!"
 ```
 
-*[Key generator](http://lockisecurity.com/tools/key-generator)
+*[Key generator](https://lockisecurity.com/tools/key-generator)
 
 ---
 
@@ -109,7 +109,7 @@ Generates a cryptographically random AES key and returns it as a hex string. Def
 | `128` | 32 | Fast, broadly compatible |
 | `256` | 64 | High-security, used by Locki |
 
-You can also generate a key in your browser at **[lockisecurity.com/tools/key-generator](http://lockisecurity.com/tools/key-generator)** — generation runs entirely client-side, nothing is transmitted or stored.
+You can also generate a key in your browser at **[lockisecurity.com/tools/key-generator](https://lockisecurity.com/tools/key-generator)** — generation runs entirely client-side, nothing is transmitted or stored.
 
 #### `importAESKeyFromHex(hex)`
 ```ts
