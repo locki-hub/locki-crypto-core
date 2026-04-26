@@ -1,6 +1,6 @@
 {
   "name": "@lockisecurity/crypto-core",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "AES-256-GCM encryption utilities used by Locki — encrypt text and files in-browser with the [LOCKI:v2:] format",
   "keywords": [
     "aes-gcm",
