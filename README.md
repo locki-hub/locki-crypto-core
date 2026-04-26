@@ -2,7 +2,7 @@
 
 AES-256-GCM encryption primitives developed within [Locki](https://lockisecurity.com/) and extracted into a standalone library for reuse in other projects. Use this library to encrypt text and files in any JavaScript environment using the browser-native WebCrypto API.
 
-> **Source:** [github.com/locki-hub/locki-crypto](https://github.com/locki-hub/locki-crypto)
+> **Source:** [github.com/locki-hub/locki-crypto-core](https://github.com/locki-hub/locki-crypto-core)
 
 ---
 
