@@ -26,19 +26,30 @@ export async function encrypt(data: string, key: string): Promise<string> {
 }
 
 export async function decrypt(encryptedData: string, key: string): Promise<string> {
-  const regex = new RegExp(
-    `(?:${ENCRYPTED_START_RE}|${ENCRYPTED_START_OLD})(.*)(?:${ENCRYPTED_END_RE}|${ENCRYPTED_END_OLD})`,
+  const tokenRegex = new RegExp(
+    `(${ENCRYPTED_START_RE}([^\\]]+)${ENCRYPTED_END_RE}|${ENCRYPTED_START_OLD}([\\s\\S]*?)${ENCRYPTED_END_OLD})`,
+    "g",
   );
-  const match = encryptedData.match(regex);
-  if (!match?.[1]) {
+
+  const matches = [...encryptedData.matchAll(tokenRegex)];
+  if (matches.length === 0) {
     throw new Error("Invalid encrypted format");
   }
+
   const cryptoKey = await importAESKeyFromHex(key);
-  const payload = Uint8Array.from(atob(match[1]), (c) => c.charCodeAt(0));
-  const iv = payload.slice(0, 12);
-  const data = payload.slice(12);
-  const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, cryptoKey, data);
-  return decoder.decode(decrypted);
+  let result = encryptedData;
+
+  for (const match of matches) {
+    const fullToken = match[0];
+    const payload = match[2] ?? match[3];
+    const payloadBytes = Uint8Array.from(atob(payload), (c) => c.charCodeAt(0));
+    const iv = payloadBytes.slice(0, 12);
+    const data = payloadBytes.slice(12);
+    const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, cryptoKey, data);
+    result = result.replace(fullToken, decoder.decode(decrypted));
+  }
+
+  return result;
 }
 
 export function isEncrypted(value: string): boolean {

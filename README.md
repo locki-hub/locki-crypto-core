@@ -1,6 +1,6 @@
 # @lockisecurity/crypto-core
 
-AES-256-GCM encryption primitives developed within [Locki](https://lockisecurity.com/) and extracted into a standalone library for reuse in other projects. Use this library to encrypt text and files in any JavaScript environment using the browser-native WebCrypto API.
+AES-GCM encryption primitives developed within [Locki](https://lockisecurity.com/) and extracted into a standalone library for reuse in other projects. Use this library to encrypt text and files in any JavaScript environment using the browser-native WebCrypto API.
 
 > **Source:** [github.com/locki-hub/locki-crypto-core](https://github.com/locki-hub/locki-crypto-core)
 
@@ -66,7 +66,7 @@ Encrypts `data` with AES-256-GCM. `key` is a 32- or 64-character hex string. Ret
 ```ts
 function decrypt(encryptedData: string, key: string): Promise<string>
 ```
-Decrypts a `[LOCKI:v2:]` string. `key` is a 32- or 64-character hex string. Also handles the legacy `#_-LOCKI-ENC-START_-#` format for backward compatibility.
+Decrypts a `[LOCKI:v2:]` string. `key` is a 32- or 64-character hex string. Also handles the legacy `#_-LOCKI-ENC-START_-#` format for backward compatibility. If the input contains surrounding text (e.g. `"hello [LOCKI:v2:...]."`) only the encrypted token is replaced — the rest of the string is preserved as-is.
 
 > **Throws** if the key is wrong or the ciphertext is corrupted. AES-GCM is authenticated encryption — a bad key or any tampering causes the WebCrypto API to reject decryption rather than return garbage. Always wrap calls in `try/catch`.
 
